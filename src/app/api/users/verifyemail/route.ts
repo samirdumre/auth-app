@@ -6,9 +6,10 @@ connect();
 
 export async function POST(req: NextRequest) {
   try {
-    const reqBody = req.json();
+    const reqBody = await req.json();
 
-    const user: any = User.findOne({
+    const {token} = reqBody;
+    const user: any = await User.findOne({
       verifyToken: token,
       verifyTokenExpiry: { $gt: Date.now() },
     });
