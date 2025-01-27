@@ -9,11 +9,11 @@ import toast from "react-hot-toast";
 export default function ProfilePage() {
   const router = useRouter();
 
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState("");
 
   async function logout() {
     try {
-      await axios.get("/api/users/log out");
+      await axios.get("/api/users/logout");
       // toast.success("Logout successful")
       router.push("/login");
     } catch (err: any) {
@@ -24,8 +24,8 @@ export default function ProfilePage() {
 
   async function getUserDetails() {
     const res = await axios.get("/api/users/me");
-    console.log(res.data);
-    setUserId((userId) => res.data.data._id);
+    setUserId(res.data.data._id);
+    return null;
   }
 
   return (
@@ -33,7 +33,7 @@ export default function ProfilePage() {
       <div>
         <h1>Profile Page</h1>
         <hr />
-        <h2>{userId ? <Link href={`/profile/${userId}`}></Link> : null}</h2>
+        <h2>{userId ? <Link href={`/profile/${userId}`}>{userId}</Link> : null}</h2>
       </div>
       <br />
       <div>
@@ -42,6 +42,13 @@ export default function ProfilePage() {
           className="bg-blue-500 p-2 text-white font-bold rounded-md"
         >
           Logout
+        </button>
+        <br />
+        <button
+          onClick={getUserDetails}
+          className="bg-green-500 p-2 text-white font-bold rounded-md"
+        >
+          Get userdetails
         </button>
       </div>
     </div>
