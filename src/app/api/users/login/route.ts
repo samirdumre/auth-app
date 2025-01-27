@@ -59,7 +59,7 @@ export async function POST(req: NextRequest){
 
         
     }
-    catch(e){
+    catch(e: any){
         console.error("Error: ", e.message)
     }
 }
